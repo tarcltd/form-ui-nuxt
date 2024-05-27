@@ -1,0 +1,239 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:nuxt/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.{js,ts,vue}"
+      ],
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "format": [
+              "camelCase"
+            ],
+            "selector": "default"
+          },
+          {
+            "format": [
+              "camelCase"
+            ],
+            "leadingUnderscore": "allow",
+            "selector": "variableLike"
+          },
+          {
+            "format": null,
+            "modifiers": [
+              "destructured"
+            ],
+            "selector": [
+              "variable",
+              "parameter"
+            ]
+          },
+          {
+            "format": [
+              "PascalCase"
+            ],
+            "selector": [
+              "class",
+              "typeLike"
+            ]
+          },
+          {
+            "format": null,
+            "selector": [
+              "objectLiteralProperty",
+              "objectLiteralMethod",
+              "typeProperty"
+            ]
+          }
+        ],
+        "@typescript-eslint/no-extra-semi": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "arrow-parens": "error",
+        "block-spacing": "error",
+        "camelcase": "off",
+        "capitalized-comments": "off",
+        "comma-dangle": [
+          "error",
+          "always-multiline"
+        ],
+        "dot-notation": "error",
+        "endOfLine": "off",
+        "eqeqeq": "error",
+        "keyword-spacing": "error",
+        "max-len": [
+          "error",
+          {
+            "code": 90
+          }
+        ],
+        "new-cap": "error",
+        "no-duplicate-imports": "error",
+        "no-extra-parens": "off",
+        "no-multiple-empty-lines": [
+          "error",
+          {
+            "max": 1,
+            "maxEOF": 1
+          }
+        ],
+        "no-self-compare": "error",
+        "no-tabs": "error",
+        "no-unused-vars": "off",
+        "no-var": "error",
+        "padded-blocks": [
+          "error",
+          "never"
+        ],
+        "prefer-object-has-own": "error",
+        "prefer-object-spread": "error",
+        "prefer-spread": "error",
+        "prettier/prettier": [
+          "error",
+          {
+            "bracketSameLine": true,
+            "endOfLine": "lf",
+            "printWidth": 90,
+            "semi": false,
+            "singleQuote": true,
+            "tabWidth": 2,
+            "trailingComma": "all"
+          }
+        ],
+        "quotes": [
+          "error",
+          "single",
+          {
+            "avoidEscape": true
+          }
+        ],
+        "semi": [
+          "error",
+          "never"
+        ],
+        "sort-imports": [
+          "error",
+          {
+            "ignoreCase": true,
+            "ignoreDeclarationSort": true
+          }
+        ],
+        "space-in-parens": [
+          "error",
+          "never"
+        ],
+        "space-infix-ops": "error",
+        "spaced-comment": [
+          "error",
+          "always",
+          {
+            "markers": [
+              "?"
+            ]
+          }
+        ],
+        "tsdoc/syntax": "warn",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+            "vars": "all",
+            "varsIgnorePattern": "^_"
+          }
+        ],
+        "yoda": "error"
+      }
+    },
+    {
+      "files": [
+        "*.js"
+      ],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "extends": [
+        "plugin:vue/vue3-essential",
+        "plugin:vue/vue3-recommended",
+        "plugin:vue/vue3-strongly-recommended"
+      ],
+      "files": [
+        "*.vue"
+      ],
+      "parser": "vue-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module"
+      },
+      "rules": {
+        "no-undef": "off",
+        "prettier/prettier": [
+          "error",
+          {
+            "bracketSameLine": true,
+            "endOfLine": "lf",
+            "parser": "vue",
+            "printWidth": 90,
+            "semi": false,
+            "singleQuote": true,
+            "tabWidth": 2,
+            "trailingComma": "all"
+          }
+        ],
+        "vue/html-closing-bracket-newline": "off",
+        "vue/html-indent": "off",
+        "vue/html-self-closing": "off",
+        "vue/max-attributes-per-line": "off",
+        "vue/multi-word-component-names": "off",
+        "vue/singleline-html-element-content-newline": "off"
+      }
+    },
+    {
+      "env": {
+        "browser": true,
+        "es2022": true,
+        "jest": true,
+        "node": true,
+        "vitest-globals/env": true
+      },
+      "extends": [
+        "plugin:vitest-globals/recommended"
+      ],
+      "files": [
+        "**/*.spec.{j,t}s?(x)"
+      ]
+    },
+    {
+      "files": [
+        "**/__mocks__/**/*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/naming-convention": "off"
+      }
+    },
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "nuxt",
+    "prettier",
+    "@typescript-eslint",
+    "eslint-plugin-tsdoc",
+    "unused-imports"
+  ],
+  "root": true
+}

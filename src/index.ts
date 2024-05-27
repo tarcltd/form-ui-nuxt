@@ -1,1 +1,1 @@
-export * from "@tarcltd/form-vue";
+export * from '@tarcltd/form-vue'
