@@ -1,0 +1,26 @@
+{
+  "name": "@tarcltd/form-ui-nuxt",
+  "version": "1.0.0",
+  "description": "A form builder using Nuxt UI and Zod.",
+  "scripts": {
+    "install": "tsx scripts/reversion.ts",
+    "lint": "npx @biomejs/biome lint src __tests__",
+    "test": "vitest --coverage",
+    "test:ci": "vitest run --coverage",
+    "publish": "jsr publish"
+  },
+  "keywords": [],
+  "author": "TARC Ltd. () <support@tarc.ltd>",
+  "license": "MIT",
+  "dependencies": {
+    "@tarcltd/form-vue": "npm:@jsr/tarcltd__form-vue@^1.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.7.3",
+    "@types/node": "^20.12.12",
+    "@vitest/coverage-v8": "^1.6.0",
+    "jsr": "^0.12.4",
+    "tsx": "^4.11.0",
+    "vitest": "^1.6.0"
+  }
+}
