@@ -1,8 +1,8 @@
-import jsr from '../jsr.json'
-import pkg from '../package.json'
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
+import pkg from '../package.json'
+import jsr from '../jsr.json'
 
 const workspaceDir = path.dirname(path.join(url.fileURLToPath(import.meta.url), '..'))
 
