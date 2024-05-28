@@ -1,24 +1,41 @@
 <template>
-  <u-form
-    :state="state"
+  <UForm
+    :ref="formRef"
+    :state="modelValue"
     :schema="schema"
-    class="w-full h-full"
+    class="flex flex-col w-full"
   >
-    <template
-      v-for="(field, key) in input.properties"
+    <slot name="leading" />
+    <TFormField
+      v-for="[key, field] in Object.entries(input?.properties ?? {}).sort(
+        ([_, a], [__, b]) => a.attrs?.order - b.attrs?.order,
+      )"
       :key="key"
-    >
-      {{ key }} - {{ field }}
-    </template>
-  </u-form>
+      v-model="internalValue[key]"
+      :field-key="key"
+      :field="field"
+      :input="input"
+    />
+    <slot />
+  </UForm>
 </template>
 
 <script lang="ts" setup>
 import type useForm from '@tarcltd/form-vue'
+import { computed, ref } from 'vue'
+import TFormField from './TFormField.vue'
 
-defineProps<{
+const props = defineProps<{
+  modelValue: ReturnType<typeof useForm>['state']
   input: ReturnType<typeof useForm>['input']
-  state: ReturnType<typeof useForm>['state']
   schema: ReturnType<typeof useForm>['schema']
 }>()
+const emit = defineEmits(['update:modelValue'])
+const formRef = ref()
+const internalValue = computed({
+  get: () => props.modelValue,
+  set(value) {
+    emit('update:modelValue', value)
+  },
+})
 </script>
