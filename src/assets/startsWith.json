@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.startsWith",
+  "type": "string",
+  "name": "Starts with",
+  "attrs": {
+    "help": "What the value must start with.",
+    "advanced": true
+  }
+}

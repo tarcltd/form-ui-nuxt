@@ -1,0 +1,10 @@
+{
+  "_path": "attrs.maxLength",
+  "type": "number",
+  "name": "Maximum length",
+  "min": 0,
+  "attrs": {
+    "help": "The maximum length of the value. Should be a positive integer.",
+    "advanced": true
+  }
+}

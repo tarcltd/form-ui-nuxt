@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.default",
+  "type": "string",
+  "name": "Default value",
+  "attrs": {
+    "help": "The default value of the field.",
+    "advanced": true
+  }
+}

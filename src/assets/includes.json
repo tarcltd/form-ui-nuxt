@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.includes",
+  "type": "string",
+  "name": "Includes",
+  "attrs": {
+    "help": "The value must include this.",
+    "advanced": true
+  }
+}

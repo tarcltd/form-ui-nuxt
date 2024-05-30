@@ -1,0 +1,10 @@
+{
+  "_path": "attrs.minLength",
+  "type": "number",
+  "name": "Minimum length",
+  "min": 0,
+  "attrs": {
+    "help": "The minimum length of the value. Should be a positive integer.",
+    "advanced": true
+  }
+}

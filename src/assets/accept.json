@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.elementInput.accept",
+  "type": "string",
+  "name": "Accept",
+  "attrs": {
+    "help": "A comma-separated list of file types to accept.",
+    "advanced": true
+  }
+}

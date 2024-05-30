@@ -1,0 +1,8 @@
+{
+  "type": "number",
+  "name": "Max",
+  "attrs": {
+    "help": "The maximum of the value.",
+    "advanced": true
+  }
+}

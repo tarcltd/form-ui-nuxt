@@ -1,0 +1,10 @@
+{
+  "_path": "attrs.elementInput.maxrows",
+  "type": "number",
+  "name": "Max rows",
+  "min": 1,
+  "attrs": {
+    "help": "The maximum number of lines the textarea should have.",
+    "advanced": true
+  }
+}

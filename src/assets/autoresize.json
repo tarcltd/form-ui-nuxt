@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.elementInput.autoresize",
+  "type": "boolean",
+  "name": "Auto-resize",
+  "attrs": {
+    "help": "Whether the textarea should auto-resize.",
+    "advanced": true
+  }
+}

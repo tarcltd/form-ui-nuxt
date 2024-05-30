@@ -4,16 +4,49 @@ import {
   createResolver,
   defineNuxtModule,
 } from '@nuxt/kit'
+import { defu } from 'defu'
 
-export interface ModuleOptions {}
+export interface ModuleOptions {
+  inputTypes?: string[]
+}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'form-ui-nuxt',
     configKey: 'formUiNuxt',
   },
-  defaults: {},
-  async setup(_options, _nuxt) {
+  defaults: {
+    inputTypes: [
+      'Text',
+      'Textarea',
+      'Number',
+      'Email',
+      'Phone',
+      'Password',
+      'Select',
+      'Quantity',
+      'Radio',
+      'Date',
+      'Time',
+      'Datetime',
+      'Yes / No',
+      'Boolean',
+      'Checkbox',
+      'File',
+      'Image',
+      'Trigger',
+      'URL',
+      'UUID',
+    ],
+  },
+  async setup(options, nuxt) {
+    nuxt.options.runtimeConfig.public.formUiNuxt = defu(
+      nuxt.options.runtimeConfig.public.formUiNuxt ?? {},
+      {
+        inputTypes: options.inputTypes ?? [],
+      },
+    )
+
     const resolver = createResolver(import.meta.url)
 
     await addComponentsDir({

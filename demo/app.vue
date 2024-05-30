@@ -12,14 +12,23 @@
     }"
   >
     <div class="overflow-hidden overflow-y-auto pl-4 pr-2 py-4">
-      <div class="flex justify-between">
+      <div class="flex justify-between mb-4">
         <h3>{{ showPreview ? "Form Preview" : "Editor" }}</h3>
-        <UFormGroup
-          name="showPreview"
-          label="Preview"
-        >
-          <UToggle v-model="showPreview" />
-        </UFormGroup>
+
+        <div class="flex gap-4 items-center">
+          <div class="flex gap-2 items-center">
+            <label>Preview</label>
+            <UToggle v-model="showPreview" />
+          </div>
+          <UButton
+            variant="link"
+            class="p-0"
+            :disabled="Object.keys(builderSchema).length === 0"
+            @click="onExport"
+          >
+            Export
+          </UButton>
+        </div>
       </div>
       <TForm
         v-if="showPreview"
@@ -45,6 +54,7 @@
         v-else
         v-model="exampleForm.input"
         class="space-y-4"
+        @edit-field="fieldInEdit = $event"
       />
     </div>
     <div
@@ -61,6 +71,7 @@
     >
       <TFormBuilder
         v-model="builderSchema"
+        v-model:field="fieldInEdit"
         class="space-y-4"
       />
     </div>
@@ -69,6 +80,7 @@
 
 <script lang="ts" setup>
 const showPreview = ref(false)
+const fieldInEdit = ref<[string, SchemaField] | null>(null)
 const builderSchema = ref<ReturnType<typeof useForm>['input']>({})
 let exampleForm = useForm(builderSchema.value)
 
@@ -78,7 +90,26 @@ function onSubmit() {
   exampleForm.reset()
 }
 
+function onExport() {
+  const blob = new Blob([JSON.stringify(exampleForm.input, null, 2)], {
+    type: 'application/json',
+  })
+
+  const url = URL.createObjectURL(blob)
+
+  const a = document.createElement('a')
+
+  a.href = url
+  a.download = 'form.json'
+
+  a.click()
+
+  URL.revokeObjectURL(url)
+}
+
 watch(builderSchema, (value) => {
+  fieldInEdit.value = null
+
   exampleForm = useForm(value)
 })
 </script>

@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "name": "Pattern",
+  "attrs": {
+    "help": "A JavaScript compatible regular expression to match.",
+    "advanced": true
+  }
+}

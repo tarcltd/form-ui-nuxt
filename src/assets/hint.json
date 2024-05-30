@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.hint",
+  "type": "string",
+  "name": "Hint",
+  "attrs": {
+    "help": "The hint text appearing above the field.",
+    "advanced": true
+  }
+}

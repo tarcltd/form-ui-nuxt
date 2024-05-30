@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.help",
+  "type": "string",
+  "name": "Help",
+  "attrs": {
+    "help": "The help text appearing under the field.",
+    "advanced": true
+  }
+}

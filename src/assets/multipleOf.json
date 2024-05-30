@@ -1,0 +1,9 @@
+{
+  "type": "number",
+  "name": "Multiple of",
+  "min": 0,
+  "attrs": {
+    "help": "A number that the value must be a multiple of.",
+    "advanced": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.elementInput.placeholder",
+  "type": "string",
+  "name": "Placeholder",
+  "attrs": {
+    "help": "The placeholder text appearing in the field. It's recommended to leave this empty.",
+    "advanced": true
+  }
+}

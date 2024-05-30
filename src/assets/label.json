@@ -1,0 +1,6 @@
+{
+  "_path": "name",
+  "type": "string",
+  "name": "Label",
+  "minLength": 1
+}

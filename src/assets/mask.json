@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.mask",
+  "type": "string",
+  "name": "Mask",
+  "attrs": {
+    "help": "An input mask to use.",
+    "advanced": true
+  }
+}

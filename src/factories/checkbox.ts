@@ -1,0 +1,17 @@
+import type { Schema } from '@tarcltd/form-vue'
+import { help } from '../builder'
+
+export default function (): [Partial<Schema>, Record<string, unknown>] {
+  return [
+    {
+      properties: {
+        help,
+      },
+    },
+    {
+      'multiple': false,
+      'field:type': 'boolean',
+      'ui': 'UCheckbox',
+    },
+  ]
+}

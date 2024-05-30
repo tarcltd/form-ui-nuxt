@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.description",
+  "type": "string",
+  "name": "Description",
+  "attrs": {
+    "help": "A description of the field for JSON schema documentation.",
+    "advanced": true
+  }
+}

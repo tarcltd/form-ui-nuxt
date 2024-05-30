@@ -7,9 +7,7 @@
   >
     <slot name="leading" />
     <TFormField
-      v-for="[key, field] in Object.entries(input?.properties ?? {}).sort(
-        ([_, a], [__, b]) => a.attrs?.order - b.attrs?.order,
-      )"
+      v-for="[key, field] in useSortedFields(input)"
       :key="key"
       v-model="internalValue[key]"
       :field-key="key"
@@ -23,6 +21,7 @@
 <script lang="ts" setup>
 import type useForm from '@tarcltd/form-vue'
 import { computed, ref } from 'vue'
+import useSortedFields from '../composables/useFieldSort'
 import TFormField from './TFormField.vue'
 
 const props = defineProps<{

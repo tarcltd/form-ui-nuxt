@@ -1,0 +1,8 @@
+{
+  "type": "number",
+  "name": "Min",
+  "attrs": {
+    "help": "The minimum of the value.",
+    "advanced": true
+  }
+}

@@ -1,5 +1,19 @@
 {
   "name": "@tarcltd/form-ui-nuxt",
   "version": "1.0.0",
-  "exports": "./src/index.ts"
+  "exports": "./src/module.ts",
+  "publish": {
+    "exclude": [
+      "__tests__",
+      ".nuxt",
+      "demo",
+      "dist",
+      "scripts",
+      ".eslintignore",
+      ".gitignore",
+      ".npmrc",
+      "eslint.config.mjs",
+      "vitest.config.ts"
+    ]
+  }
 }

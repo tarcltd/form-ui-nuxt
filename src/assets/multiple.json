@@ -1,0 +1,8 @@
+{
+  "_path": "attrs.elementInput.multiple",
+  "type": "boolean",
+  "name": "Multiple",
+  "attrs": {
+    "advanced": true
+  }
+}

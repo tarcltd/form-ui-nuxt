@@ -4,8 +4,10 @@
   "description": "A form builder using Nuxt UI and Zod.",
   "type": "module",
   "scripts": {
-    "install": "tsx scripts/reversion.ts",
+    "dev": "cd demo && npm run dev",
+    "install": "nuxt-module-build build --stub && nuxt-module-build prepare && tsx scripts/reversion.ts",
     "lint": "eslint \"**/*\"",
+    "start": "npm run dev",
     "test": "vitest --coverage",
     "test:ci": "vitest run --coverage",
     "publish": "jsr publish"
@@ -17,6 +19,7 @@
     "@nuxt/kit": "^3.11.2",
     "@nuxt/ui": "^2.16.0",
     "@tarcltd/form-vue": "npm:@jsr/tarcltd__form-vue@^1.0.1",
+    "@vueuse/core": "^10.10.0",
     "change-case": "^5.4.4",
     "defu": "^6.1.4",
     "inputmask": "^5.0.8",

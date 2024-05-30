@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.endsWith",
+  "type": "string",
+  "name": "Ends with",
+  "attrs": {
+    "help": "What the value must end with.",
+    "advanced": true
+  }
+}

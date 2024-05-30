@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.groupId",
+  "type": "string",
+  "name": "Group ID",
+  "attrs": {
+    "help": "The group the field belongs to.",
+    "advanced": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "_path": "attrs.elementInput.rows",
+  "type": "number",
+  "name": "Rows",
+  "min": 1,
+  "attrs": {
+    "help": "The number of lines the input should have.",
+    "advanced": true
+  }
+}

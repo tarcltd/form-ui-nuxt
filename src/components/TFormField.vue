@@ -10,7 +10,7 @@
     v-else-if="field.attrs?.ui === 'URadioGroup'"
     v-model="internalValue"
     :legend="field.name"
-    :options="field.enum.map((e: string) => ({ label: e, value: e }))"
+    :options="field.enum?.map((e: string) => ({ label: e, value: e }))"
     v-bind="field.attrs?.elementFormGroup"
     :disabled="disabled"
   />
@@ -27,9 +27,7 @@
     v-bind="field.attrs?.elementFormGroup"
   >
     <USelectMenu
-      v-if="
-        field.type === 'number' && field.attrs?.ui === 'USelectMenu.quantity'
-      "
+      v-if="field.attrs?.ui === 'USelectMenu:quantity'"
       v-model.number="internalValue"
       :options="
         Array.from(
@@ -41,14 +39,14 @@
       :disabled="disabled"
     />
     <USelectMenu
-      v-else-if="field.type === 'string' && field.attrs?.ui === 'USelectMenu'"
+      v-else-if="field.attrs?.ui === 'USelectMenu'"
       v-model="internalValue"
       :options="field.enum"
       v-bind="field.attrs?.elementInput"
       :disabled="disabled"
     />
     <UTextarea
-      v-else-if="field.type === 'string' && field.attrs?.ui === 'UTextarea'"
+      v-else-if="field.attrs?.ui === 'UTextarea'"
       v-model.trim="internalValue"
       v-bind="field.attrs?.elementInput"
       :disabled="disabled"
@@ -81,7 +79,7 @@
 <script lang="ts" setup>
 import type useForm from '@tarcltd/form-vue'
 import { type SchemaField } from '@tarcltd/form-vue'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 
 const props = defineProps<{
   modelValue?: string | number | boolean
@@ -101,20 +99,42 @@ const el = ref()
 
 onMounted(async () => {
   try {
-    if (!el.value) {
+    if (!el.value || !el.value.input) {
       return
     }
 
-    if (el.value.input && props.field.attrs?.pattern) {
+    if (
+      props.field.attrs?.mask
+      && (props.field.type === 'date'
+      || props.field.type === 'time'
+      || props.field.type === 'datetime')
+    ) {
       const inputMask = await import('inputmask')
 
       inputMask
-        .default({ regex: props.field.attrs?.pattern })
+        .default('datetime', {
+          inputFormat: props.field.attrs?.mask,
+        })
         .mask(el.value.input)
+    }
+    else if (typeof props.field.attrs?.mask === 'string') {
+      const inputMask = await import('inputmask')
+
+      inputMask.default(props.field.attrs?.mask).mask(el.value.input)
     }
   }
   catch (error) {
     console.error(error)
   }
 })
+
+watch(
+  () => props.field,
+  (value) => {
+    if (value.attrs?.default && !internalValue.value) {
+      internalValue.value = value.attrs?.default
+    }
+  },
+  { deep: true, immediate: true },
+)
 </script>

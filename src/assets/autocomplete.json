@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.elementInput.autocomplete",
+  "type": "string",
+  "name": "Autocomplete",
+  "attrs": {
+    "help": "The HTML autocomplete attribute.",
+    "advanced": true
+  }
+}
