@@ -6,7 +6,7 @@ import autocomplete from './assets/autocomplete.json'
 import pattern from './assets/pattern.json'
 import label from './assets/label.json'
 import required from './assets/required.json'
-import groupId from './assets/groupId.json'
+import group from './assets/group.json'
 import description from './assets/description.json'
 import minLength from './assets/minLength.json'
 import maxLength from './assets/maxLength.json'
@@ -33,7 +33,7 @@ export {
   pattern,
   label,
   required,
-  groupId,
+  group,
   description,
   minLength,
   maxLength,

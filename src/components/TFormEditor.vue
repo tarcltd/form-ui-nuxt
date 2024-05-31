@@ -39,9 +39,30 @@
               cursor: 'ns-resize',
             }"
           />
-          <span class="text-sm text-gray-500 dark:text-gray-700">
-            {{ element[1].attrs.groupId }}
-          </span>
+          <div class="flex items-center gap-4">
+            <UButton
+              variant="link"
+              class="p-0"
+              size="sm"
+              @click.stop.prevent="onModifyGroup(element)"
+            >
+              Modify group
+            </UButton>
+            <UButton
+              variant="link"
+              class="p-0"
+              size="sm"
+              @click.stop.prevent="onRemove(element[0])"
+            >
+              Remove
+            </UButton>
+            <span class="text-sm text-gray-500 dark:text-gray-700">
+              |
+            </span>
+            <span class="text-sm text-gray-500 dark:text-gray-700">
+              {{ element[1].attrs.group }}
+            </span>
+          </div>
         </div>
         <TFormField
           v-model="stubModel"
@@ -58,7 +79,13 @@
           <div class="grid p-2">
             <UButton
               variant="ghost"
-              @click.stop="onRemove()"
+              @click.stop="onModifyGroup(element)"
+            >
+              Modify group
+            </UButton>
+            <UButton
+              variant="ghost"
+              @click.stop="onRemove(element[0])"
             >
               Remove
             </UButton>
@@ -75,17 +102,20 @@ import Draggable from 'vuedraggable'
 import type useForm from '@tarcltd/form-vue'
 import { computed, ref, watch, unref } from 'vue'
 import type { SchemaField } from '@tarcltd/form-vue'
+import { deepEqual } from 'fast-equals'
 import useSortedFields from '../composables/useFieldSort'
 import TFormField from './TFormField.vue'
 
 const props = defineProps<{
   modelValue: ReturnType<typeof useForm>['input']
 }>()
-const emit = defineEmits(['update:modelValue', 'editField'])
+const emit = defineEmits(['update:modelValue', 'editField', 'editGroup'])
 const internalValue = computed({
   get: () => props.modelValue,
   set(value) {
-    emit('update:modelValue', value)
+    if (!deepEqual(value, props.modelValue)) {
+      emit('update:modelValue', value)
+    }
   },
 })
 const sortedFields = ref<[string, SchemaField][]>([])
@@ -115,15 +145,13 @@ function onContextMenu(element: [string, SchemaField]) {
   emit('editField', element)
 }
 
-function onRemove() {
-  if (!activeField.value) {
-    return
-  }
+function onRemove(fieldKey: string) {
+  isOpen.value = false
 
   const newProperties: Record<string, SchemaField> = {}
 
   for (const [index, [key, field]] of sortedFields.value.entries()) {
-    if (key === activeField.value[0]) {
+    if (key === fieldKey) {
       continue
     }
 
@@ -140,9 +168,16 @@ function onRemove() {
 
   activeField.value = null
 
+  emit('editField', null)
+}
+
+function onModifyGroup(element: [string, SchemaField]) {
   isOpen.value = false
 
+  activeField.value = null
+
   emit('editField', null)
+  emit('editGroup', element)
 }
 
 watch(

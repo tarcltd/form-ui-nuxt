@@ -81,6 +81,7 @@
 <script lang="ts" setup>
 import type useForm from '@tarcltd/form-vue'
 import { type SchemaField } from '@tarcltd/form-vue'
+import { deepEqual } from 'fast-equals'
 import { computed, ref, onMounted, watch } from 'vue'
 
 const props = defineProps<{
@@ -94,7 +95,9 @@ const emit = defineEmits(['update:modelValue'])
 const internalValue = computed({
   get: () => props.modelValue,
   set(value) {
-    emit('update:modelValue', value)
+    if (!deepEqual(value, props.modelValue)) {
+      emit('update:modelValue', value)
+    }
   },
 })
 const el = ref()

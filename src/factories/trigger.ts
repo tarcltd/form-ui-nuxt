@@ -42,6 +42,10 @@ export default function (
         value: {
           type: 'string',
           name: 'Value',
+          attrs: {
+            'field:type': 'trigger:value',
+            'help': 'The value to compare the source value to.',
+          },
         },
       },
       required: ['source', 'condition', 'value'],

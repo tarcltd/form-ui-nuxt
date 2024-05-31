@@ -17,7 +17,7 @@ export default function useFieldSort(
 
   return Object.entries(input.properties ?? {}).sort(
     ([_, a], [__, b]) =>
-      collator.compare(a.attrs?.groupId, b.attrs?.groupId)
+      collator.compare(a.attrs?.group, b.attrs?.group)
       + a.attrs?.order
       - b.attrs?.order,
   ) as [string, SchemaField][]

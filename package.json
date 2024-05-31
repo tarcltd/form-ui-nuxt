@@ -19,11 +19,12 @@
   "dependencies": {
     "@nuxt/kit": "^3.11.2",
     "@nuxt/ui": "^2.16.0",
-    "@tarcltd/form-vue": "npm:@jsr/tarcltd__form-vue@^1.0.5",
+    "@tarcltd/form-vue": "npm:@jsr/tarcltd__form-vue@^1.0.6",
     "@vueuse/core": "^10.10.0",
     "@vueuse/integrations": "^10.10.0",
     "change-case": "^5.4.4",
     "defu": "^6.1.4",
+    "fast-equals": "^5.0.1",
     "fuse.js": "^7.0.0",
     "inputmask": "^5.0.8",
     "vuedraggable": "^4.1.0"

@@ -1,7 +1,7 @@
 import type useForm from '@tarcltd/form-vue'
 import { type Schema } from '@tarcltd/form-vue'
 import { defu } from 'defu'
-import { description, groupId, label, required } from '../builder'
+import { description, group, label, required } from '../builder'
 import text from './text'
 import textarea from './textarea'
 import number from './number'
@@ -28,10 +28,10 @@ export const factoryDefaults = {
   properties: {
     label,
     required,
-    groupId,
+    group,
     description,
   },
-  required: ['inputType', 'label', 'required', 'groupId'],
+  required: ['inputType', 'label', 'required', 'group'],
 } satisfies Schema
 
 export function generateFactories(
@@ -91,7 +91,7 @@ export function generateSchema(
       } satisfies Schema),
       defu(subschema[1], {
         order: -1,
-        groupId: 'trigger',
+        group: 'trigger',
       }),
     ]
   }
@@ -101,7 +101,7 @@ export function generateSchema(
     defu(subschema[1], {
       required: true,
       order: Object.keys(input?.properties ?? {}).length + 1,
-      groupId: 'main',
+      group: 'main',
     }),
   ]
 }
