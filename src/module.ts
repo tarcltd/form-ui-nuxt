@@ -34,9 +34,9 @@ export default defineNuxtModule<ModuleOptions>({
       'Checkbox',
       'File',
       'Image',
-      'Trigger',
       'URL',
       'UUID',
+      'Trigger',
     ],
   },
   async setup(options, nuxt) {

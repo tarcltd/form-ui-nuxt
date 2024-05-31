@@ -35,7 +35,8 @@ export default function useDeepObjSet(
     if (typeof nextKey !== 'undefined') {
       obj[currentKey] = obj[currentKey]
         ? obj[currentKey]
-        : Number.isNaN(nextKey as number)
+        /* eslint-disable-next-line unicorn/prefer-number-properties */
+        : isNaN(nextKey as number)
           ? {}
           : []
     }

@@ -22,6 +22,7 @@ import multipleOf from './assets/multipleOf.json'
 import defaultValue from './assets/default.json'
 import multiple from './assets/multiple.json'
 import accept from './assets/accept.json'
+import step from './assets/step.json'
 
 export {
   help,
@@ -48,4 +49,5 @@ export {
   defaultValue,
   multiple,
   accept,
+  step,
 }

@@ -7,6 +7,8 @@ import {
   min,
   max,
   multipleOf,
+  defaultValue,
+  step,
 } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
@@ -17,8 +19,10 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         help,
         placeholder,
         autocomplete,
+        default: defaultValue,
         min,
         max,
+        step,
         multipleOf,
       },
     },

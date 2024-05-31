@@ -32,6 +32,8 @@ export default function (
             'Does not match',
             'Empty',
             'Not empty',
+            'Truthy',
+            'Falsy',
           ],
           attrs: {
             help: 'An operation to perform on the source value.',
@@ -39,7 +41,7 @@ export default function (
         },
         value: {
           type: 'string',
-          name: 'Source value',
+          name: 'Value',
         },
       },
       required: ['source', 'condition', 'value'],

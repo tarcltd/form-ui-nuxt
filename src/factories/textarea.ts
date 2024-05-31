@@ -12,6 +12,7 @@ import {
   autoresize,
   rows,
   maxrows,
+  defaultValue,
 } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
@@ -21,6 +22,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         hint,
         help,
         placeholder,
+        default: defaultValue,
         minLength,
         maxLength,
         startsWith,

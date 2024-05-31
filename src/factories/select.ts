@@ -1,5 +1,5 @@
 import type { Schema } from '@tarcltd/form-vue'
-import { autocomplete, help, hint, placeholder } from '../builder'
+import { autocomplete, defaultValue, help, hint, placeholder } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
   return [
@@ -9,6 +9,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         help,
         placeholder,
         autocomplete,
+        default: defaultValue,
       },
     },
     {

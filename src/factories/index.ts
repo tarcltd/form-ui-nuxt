@@ -1,100 +1,99 @@
-import type useForm from "@tarcltd/form-vue";
-import { type Schema } from "@tarcltd/form-vue";
-import { defu } from "defu";
-import { description, groupId, label, required } from "../builder";
-import text from "./text";
-import textarea from "./textarea";
-import number from "./number";
-import email from "./email";
-import phone from "./phone";
-import password from "./password";
-import date from "./date";
-import time from "./time";
-import datetime from "./datetime";
-import yesNo from "./yesNo";
-import boolean from "./boolean";
-import checkbox from "./checkbox";
-import file from "./file";
-import image from "./image";
-import url from "./url";
-import uuid from "./uuid";
-import trigger from "./trigger";
-import radio from "./radio";
-import quantity from "./quantity";
-import select from "./select";
+import type useForm from '@tarcltd/form-vue'
+import { type Schema } from '@tarcltd/form-vue'
+import { defu } from 'defu'
+import { description, groupId, label, required } from '../builder'
+import text from './text'
+import textarea from './textarea'
+import number from './number'
+import email from './email'
+import phone from './phone'
+import password from './password'
+import date from './date'
+import time from './time'
+import datetime from './datetime'
+import yesNo from './yesNo'
+import boolean from './boolean'
+import checkbox from './checkbox'
+import file from './file'
+import image from './image'
+import url from './url'
+import uuid from './uuid'
+import trigger from './trigger'
+import radio from './radio'
+import quantity from './quantity'
+import select from './select'
 
 export const factoryDefaults = {
-  type: "object",
+  type: 'object',
   properties: {
     label,
     required,
     groupId,
     description,
   },
-  required: ["inputType", "label", "required", "groupId"],
-} satisfies Schema;
+  required: ['inputType', 'label', 'required', 'groupId'],
+} satisfies Schema
 
 export function generateFactories(
-  input?: ReturnType<typeof useForm>["input"]
+  input?: ReturnType<typeof useForm>['input'],
 ): Record<string, () => [Partial<Schema>, Record<string, unknown>]> {
   return {
-    Text: text,
-    Textarea: textarea,
-    Number: number,
-    Email: email,
-    Phone: phone,
-    Password: password,
-    Select: select,
-    Quantity: quantity,
-    Radio: radio,
-    Date: date,
-    Time: time,
-    Datetime: datetime,
-    "Yes / No": yesNo,
-    Boolean: boolean,
-    Checkbox: checkbox,
-    File: file,
-    Image: image,
-    Trigger: trigger(
-      Object.values(input?.properties ?? {}).map((field) => field.name)
+    'Text': text,
+    'Textarea': textarea,
+    'Number': number,
+    'Email': email,
+    'Phone': phone,
+    'Password': password,
+    'Select': select,
+    'Quantity': quantity,
+    'Radio': radio,
+    'Date': date,
+    'Time': time,
+    'Datetime': datetime,
+    'Yes / No': yesNo,
+    'Boolean': boolean,
+    'Checkbox': checkbox,
+    'File': file,
+    'Image': image,
+    'Trigger': trigger(
+      Object.values(input?.properties ?? {}).map(field => field.name),
     ),
-    URL: url,
-    UUID: uuid,
-  };
+    'URL': url,
+    'UUID': uuid,
+  }
 }
 
 export function generateSchema(
   inputType: keyof ReturnType<typeof generateFactories> | string | null,
-  input?: ReturnType<typeof useForm>["input"]
+  input?: ReturnType<typeof useForm>['input'],
 ): [Schema, Record<string, unknown>] | null {
-  if (typeof inputType !== "string") {
-    return null;
+  if (typeof inputType !== 'string') {
+    return null
   }
 
-  const schemaFactory =
-    generateFactories(input)[
+  const schemaFactory
+    = generateFactories(input)[
       inputType as keyof ReturnType<typeof generateFactories>
-    ];
+    ]
 
-  if (typeof schemaFactory !== "function") {
-    return null;
+  if (typeof schemaFactory !== 'function') {
+    return null
   }
 
-  const subschema = schemaFactory();
+  const subschema = schemaFactory()
 
-  if ("field:type" in subschema && subschema[1]["field:type"] === "trigger") {
+  if ('field:type' in subschema[1] && subschema[1]['field:type'] === 'trigger') {
     return [
       defu(subschema[0], {
-        type: "object",
+        type: 'object',
         properties: {},
         required: [],
       } satisfies Schema),
       defu(subschema[1], {
-        required: true,
-        order: Object.keys(input?.properties ?? {}).length + 1,
-        groupId: "main",
+        order: -1,
+        groupId: 'trigger',
       }),
-    ];
+    ]
   }
 
   return [
@@ -102,9 +101,9 @@ export function generateSchema(
     defu(subschema[1], {
       required: true,
       order: Object.keys(input?.properties ?? {}).length + 1,
-      groupId: "main",
+      groupId: 'main',
     }),
-  ];
+  ]
 }
 
-export default generateSchema;
+export default generateSchema

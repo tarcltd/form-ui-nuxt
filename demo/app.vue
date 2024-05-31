@@ -13,8 +13,9 @@
   >
     <div class="overflow-hidden overflow-y-auto pl-4 pr-2 py-4">
       <div class="flex justify-between mb-4">
-        <h3>{{ showPreview ? "Form Preview" : "Editor" }}</h3>
-
+        <h1 class="text-lg">
+          {{ showPreview ? "Form Preview" : "Editor" }}
+        </h1>
         <div class="flex gap-4 items-center">
           <div class="flex gap-2 items-center">
             <label>Preview</label>

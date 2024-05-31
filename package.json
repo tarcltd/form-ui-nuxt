@@ -1,12 +1,13 @@
 {
   "name": "@tarcltd/form-ui-nuxt",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A form builder using Nuxt UI and Zod.",
   "type": "module",
   "scripts": {
     "dev": "cd demo && npm run dev",
     "install": "nuxt-module-build build --stub && nuxt-module-build prepare && tsx scripts/reversion.ts",
-    "lint": "eslint \"**/*\"",
+    "lint": "eslint --fix \"**/*\"",
+    "lint:ci": "eslint \"**/*\"",
     "start": "npm run dev",
     "test": "vitest --coverage",
     "test:ci": "vitest run --coverage",
@@ -18,7 +19,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.11.2",
     "@nuxt/ui": "^2.16.0",
-    "@tarcltd/form-vue": "npm:@jsr/tarcltd__form-vue@^1.0.1",
+    "@tarcltd/form-vue": "npm:@jsr/tarcltd__form-vue@^1.0.5",
     "@vueuse/core": "^10.10.0",
     "change-case": "^5.4.4",
     "defu": "^6.1.4",

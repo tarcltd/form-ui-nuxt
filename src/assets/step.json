@@ -1,0 +1,8 @@
+{
+  "type": "number",
+  "name": "Step",
+  "attrs": {
+    "help": "The step of the input.",
+    "advanced": true
+  }
+}

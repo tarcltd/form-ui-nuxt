@@ -10,6 +10,7 @@ import {
   endsWith,
   includes,
   pattern,
+  defaultValue,
 } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
@@ -20,6 +21,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         help,
         placeholder,
         autocomplete,
+        default: defaultValue,
         minLength,
         maxLength,
         startsWith,
