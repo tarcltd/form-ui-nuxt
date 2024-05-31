@@ -15,11 +15,11 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'Quantity',
+      'type': 'number',
       'autocomplete': 'off',
       'min': 0,
       'max': 50,
-      'field:type': 'number',
-      'ui': 'USelectMenu.quantity',
     },
   ]
 }

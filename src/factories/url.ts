@@ -13,8 +13,9 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'URL',
+      'type': 'url',
       'autocomplete': 'off',
-      'field:type': 'url',
     },
   ]
 }

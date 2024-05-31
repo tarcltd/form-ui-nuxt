@@ -35,10 +35,10 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
-      autoresize: true,
-      rows: 3,
-      maxrows: 3,
-      ui: 'UTextarea',
+      'field:type': 'Textarea',
+      'autoresize': true,
+      'rows': 3,
+      'maxrows': 3,
     },
   ]
 }

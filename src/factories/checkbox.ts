@@ -1,5 +1,5 @@
 import type { Schema } from '@tarcltd/form-vue'
-import { help, defaultValue } from '../builder'
+import { help, defaultValue, multiple } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
   return [
@@ -8,15 +8,17 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         help,
         default: {
           ...defaultValue,
+          type: 'boolean',
           attrs: {
             default: false,
           },
         },
+        multiple,
       },
     },
     {
-      'field:type': 'boolean',
-      'ui': 'UCheckbox',
+      'field:type': 'Checkbox',
+      'type': 'boolean',
     },
   ]
 }

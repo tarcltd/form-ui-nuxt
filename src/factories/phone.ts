@@ -23,9 +23,12 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'Phone',
       'autocomplete': 'phone',
       'mask': '\\+1 \\(999\\) 999-9999',
-      'field:type': 'tel',
+      'elementInput': {
+        type: 'tel',
+      },
     },
   ]
 }

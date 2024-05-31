@@ -31,7 +31,8 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
-      autocomplete: 'off',
+      'field:type': 'Text',
+      'autocomplete': 'off',
     },
   ]
 }

@@ -13,8 +13,8 @@
   >
     <div class="overflow-hidden overflow-y-auto pl-4 pr-2 py-4">
       <div class="flex justify-between mb-4">
-        <h1 class="text-lg">
-          {{ showPreview ? "Form Preview" : "Editor" }}
+        <h1 class="text-lg min-h-6">
+          {{ showPreview ? "Form Preview" : "&nbsp;" }}
         </h1>
         <div class="flex gap-4 items-center">
           <div class="flex gap-2 items-center">
@@ -63,17 +63,15 @@
         'grid': true,
         'w-[250px]': true,
         'pl-2 pr-4 py-4': true,
-        'gap-4': true,
         'box-border': true,
         'h-full': true,
         'overflow-hidden': true,
         'overflow-y-auto': true,
       }"
     >
-      <TFormBuilder
+      <TFormFieldEditor
         v-model="builderSchema"
         v-model:field="fieldInEdit"
-        class="space-y-4"
       />
     </div>
   </div>

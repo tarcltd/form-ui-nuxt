@@ -13,7 +13,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
-      ui: 'USelectMenu',
+      'field:type': 'Select',
     },
   ]
 }

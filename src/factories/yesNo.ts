@@ -15,8 +15,8 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
-      default: 'No',
-      ui: 'USelectMenu',
+      'field:type': 'Yes / No',
+      'default': 'No',
     },
   ]
 }

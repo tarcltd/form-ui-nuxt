@@ -16,8 +16,9 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       required: ['defaultValue'],
     },
     {
-      default: 'False',
-      ui: 'USelectMenu',
+      'field:type': 'Boolean',
+      'type': 'boolean',
+      'default': 'False',
     },
   ]
 }

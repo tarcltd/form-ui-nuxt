@@ -82,7 +82,7 @@ export function generateSchema(
 
   const subschema = schemaFactory()
 
-  if ('field:type' in subschema[1] && subschema[1]['field:type'] === 'trigger') {
+  if (subschema[1]['field:type'] === 'trigger') {
     return [
       defu(subschema[0], {
         type: 'object',

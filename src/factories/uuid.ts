@@ -13,8 +13,9 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'UUID',
+      'type': 'uuid',
       'autocomplete': 'off',
-      'field:type': 'uuid',
     },
   ]
 }

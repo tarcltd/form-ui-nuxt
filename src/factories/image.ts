@@ -14,9 +14,12 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'Image',
       'multiple': false,
       'accept': 'image/*',
-      'field:type': 'file',
+      'elementInput': {
+        type: 'file',
+      },
     },
   ]
 }

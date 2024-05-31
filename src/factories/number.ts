@@ -27,7 +27,12 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
-      autocomplete: 'off',
+      'field:type': 'Number',
+      'type': 'number',
+      'autocomplete': 'off',
+      'elementInput': {
+        type: 'number',
+      },
     },
   ]
 }

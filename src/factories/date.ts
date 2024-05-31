@@ -23,9 +23,10 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'Date',
+      'type': 'date',
       'autocomplete': 'off',
       'mask': 'mm/dd/yyyy',
-      'field:type': 'date',
     },
   ]
 }

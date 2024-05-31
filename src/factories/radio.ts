@@ -1,5 +1,12 @@
 import type { Schema } from '@tarcltd/form-vue'
-import { hint, help, placeholder, autocomplete, defaultValue } from '../builder'
+import {
+  hint,
+  help,
+  placeholder,
+  autocomplete,
+  defaultValue,
+  multiple,
+} from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
   return [
@@ -10,11 +17,13 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         placeholder,
         autocomplete,
         default: defaultValue,
+        multiple,
       },
     },
     {
-      autocomplete: 'off',
-      ui: 'URadioGroup',
+      'field:type': 'Radio',
+      'autocomplete': 'off',
+      'multiple': false,
     },
   ]
 }

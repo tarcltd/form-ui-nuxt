@@ -1,15 +1,23 @@
 <template>
   <UCheckbox
-    v-if="field.type === 'boolean'"
+    v-if="field.attrs?.['field:type'] === 'Checkbox'"
     v-model="internalValue"
-    :label="field.name"
+    :label="
+      input.required.includes(fieldKey)
+        ? field.name
+        : `${field.name} (Optional)`
+    "
     v-bind="field.attrs?.elementFormGroup"
     :disabled="disabled"
   />
   <URadioGroup
-    v-else-if="field.attrs?.ui === 'URadioGroup'"
+    v-else-if="field.attrs?.['field:type'] === 'Radio'"
     v-model="internalValue"
-    :legend="field.name"
+    :legend="
+      input.required.includes(fieldKey)
+        ? field.name
+        : `${field.name} (Optional)`
+    "
     :options="field.enum?.map((e: string) => ({ label: e, value: e }))"
     v-bind="field.attrs?.elementFormGroup"
     :disabled="disabled"
@@ -27,7 +35,7 @@
     v-bind="field.attrs?.elementFormGroup"
   >
     <USelectMenu
-      v-if="field.attrs?.ui === 'USelectMenu:quantity'"
+      v-if="field.attrs?.['field:type'] === 'Quantity'"
       v-model.number="internalValue"
       :options="
         Array.from(
@@ -39,26 +47,20 @@
       :disabled="disabled"
     />
     <USelectMenu
-      v-else-if="field.attrs?.ui === 'USelectMenu'"
+      v-else-if="Array.isArray(field.enum)"
       v-model="internalValue"
       :options="field.enum"
       v-bind="field.attrs?.elementInput"
       :disabled="disabled"
     />
     <UTextarea
-      v-else-if="field.attrs?.ui === 'UTextarea'"
+      v-else-if="field.attrs?.['field:type'] === 'Textarea'"
       v-model.trim="internalValue"
       v-bind="field.attrs?.elementInput"
       :disabled="disabled"
     />
     <UInput
-      v-else-if="field.type === 'email'"
-      v-model.trim="internalValue"
-      v-bind="field.attrs?.elementInput"
-      :disabled="disabled"
-    />
-    <UInput
-      v-else-if="field.type === 'number'"
+      v-else-if="field.attrs?.['field:type'] === 'Number'"
       v-model.number="internalValue"
       type="number"
       :min="field.min"
@@ -67,7 +69,7 @@
       :disabled="disabled"
     />
     <UInput
-      v-else
+      v-else-if="field.attrs?.['field:type'] !== 'Trigger'"
       ref="el"
       v-model.trim="internalValue"
       v-bind="field.attrs?.elementInput"

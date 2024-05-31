@@ -47,9 +47,10 @@ export default function (
       required: ['source', 'condition', 'value'],
     },
     {
+      'field:type': 'trigger',
+      'type': 'trigger',
       'source': sources[0] ?? '',
       'condition': 'Equals',
-      'field:type': 'trigger',
     },
   ]
 }

@@ -13,8 +13,12 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'Email',
+      'type': 'email',
       'autocomplete': 'email',
-      'field:type': 'email',
+      'elementInput': {
+        type: 'email',
+      },
     },
   ]
 }

@@ -23,8 +23,11 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
       },
     },
     {
+      'field:type': 'Password',
       'autocomplete': 'current-password',
-      'field:type': 'password',
+      'elementInput': {
+        type: 'password',
+      },
     },
   ]
 }
