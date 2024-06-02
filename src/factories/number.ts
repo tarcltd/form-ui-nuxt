@@ -9,6 +9,7 @@ import {
   multipleOf,
   defaultValue,
   step,
+  visible,
 } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
@@ -24,6 +25,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         max,
         step,
         multipleOf,
+        visible,
       },
     },
     {

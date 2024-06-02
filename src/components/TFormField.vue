@@ -69,7 +69,7 @@
       :disabled="disabled"
     />
     <UInput
-      v-else-if="field.attrs?.['field:type'] !== 'Trigger'"
+      v-else-if="field.attrs?.['field:type'] !== 'Trigger' && field.attrs?.['field:type'] !== 'Link'"
       ref="el"
       v-model.trim="internalValue"
       v-bind="field.attrs?.elementInput"

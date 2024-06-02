@@ -6,6 +6,7 @@ import {
   autocomplete,
   defaultValue,
   multiple,
+  visible,
 } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
@@ -18,6 +19,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         autocomplete,
         default: defaultValue,
         multiple,
+        visible,
       },
     },
     {

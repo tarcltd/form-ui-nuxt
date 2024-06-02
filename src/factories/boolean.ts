@@ -1,5 +1,5 @@
 import type { Schema } from '@tarcltd/form-vue'
-import { hint, help, placeholder, defaultValue } from '../builder'
+import { hint, help, placeholder, defaultValue, visible } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
   return [
@@ -12,6 +12,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
           ...defaultValue,
           enum: ['True', 'False'],
         },
+        visible,
       },
       required: ['defaultValue'],
     },

@@ -13,6 +13,7 @@ import {
   rows,
   maxrows,
   defaultValue,
+  visible,
 } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
@@ -32,6 +33,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
         autoresize,
         rows,
         maxrows,
+        visible,
       },
     },
     {

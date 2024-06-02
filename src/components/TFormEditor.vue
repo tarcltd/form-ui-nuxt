@@ -101,7 +101,7 @@ import { useMouse, useWindowScroll } from '@vueuse/core'
 import Draggable from 'vuedraggable'
 import type useForm from '@tarcltd/form-vue'
 import { computed, ref, watch, unref } from 'vue'
-import type { SchemaField } from '@tarcltd/form-vue'
+import type { Schema, SchemaField } from '@tarcltd/form-vue'
 import { deepEqual } from 'fast-equals'
 import useSortedFields from '../composables/useFieldSort'
 import TFormField from './TFormField.vue'
@@ -164,7 +164,28 @@ function onRemove(fieldKey: string) {
     }
   }
 
-  internalValue.value.properties = newProperties
+  if (Object.keys(newProperties).length === 0) {
+    internalValue.value = {} as Schema
+  }
+  else {
+    internalValue.value.properties = newProperties
+
+    internalValue.value.required = internalValue.value.required.filter(key => key !== fieldKey)
+
+    if (Array.isArray(internalValue.value.metadata?.triggers)) {
+      internalValue.value.metadata.triggers = internalValue.value.metadata?.triggers.filter(
+        trigger => trigger.source !== internalValue.value.properties[fieldKey]?.name,
+      )
+
+      if (internalValue.value.metadata?.triggers.length === 0) {
+        delete internalValue.value.metadata?.triggers
+      }
+    }
+
+    if (internalValue.value.metadata && Object.keys(internalValue.value.metadata).length === 0) {
+      delete internalValue.value.metadata
+    }
+  }
 
   activeField.value = null
 

@@ -1,0 +1,9 @@
+{
+  "_path": "attrs.visible",
+  "type": "boolean",
+  "name": "Visible",
+  "attrs": {
+    "help": "Show the field in the form.",
+    "advanced": true
+  }
+}

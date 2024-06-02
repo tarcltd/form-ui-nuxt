@@ -1,6 +1,6 @@
 <template>
   <UForm
-    v-if="viewMode === 'edit' && inputType"
+    v-if="internalMode ==='field' && viewMode === 'edit' && inputType"
     :key="inputType"
     :state="form.state"
     :schema="form.schema"
@@ -15,7 +15,7 @@
     >
       Select type
     </UButton>
-    <h2>{{ inputType }} Settings</h2>
+    <h2>{{ inputType }} settings</h2>
     <template
       v-for="(option, key) in internalSchema.properties"
       :key="key"
@@ -236,6 +236,20 @@
         {{ props.field ? "Update trigger" : "Add trigger" }}
       </UButton>
       <UButton
+        v-else-if="inputType === 'Link'"
+        type="submit"
+        block
+      >
+        {{ props.field ? "Update link" : "Add link" }}
+      </UButton>
+      <UButton
+        v-else-if="inputType === 'Action'"
+        type="submit"
+        block
+      >
+        {{ props.field ? "Update action" : "Add action" }}
+      </UButton>
+      <UButton
         v-else
         type="submit"
         block
@@ -245,7 +259,7 @@
     </div>
   </UForm>
   <UForm
-    v-else
+    v-else-if="internalMode === 'field'"
     :state="{
       inputType,
       search,
@@ -320,12 +334,46 @@
       </UButton>
     </div>
   </UForm>
+  <UForm
+    v-else-if="internalMode === 'group'"
+    :state="{}"
+    class="relative flex flex-col gap-2"
+    @submit="viewMode = 'edit'"
+  >
+    <h2>Group settings</h2>
+    <div class="sticky bottom-0 left-0 right-0 flex flex-col gap-2">
+      <div
+        class="grid gap-2 w-full"
+        :style="{
+          gridTemplateColumns: internalField ? `repeat(2, 1fr)` : `1fr`,
+        }"
+      >
+        <UButton
+          size="sm"
+          color="gray"
+          block
+          @click="onCancel"
+        >
+          Cancel
+        </UButton>
+        <UButton
+          v-if="internalField"
+          size="sm"
+          color="red"
+          block
+          @click="onRemove"
+        >
+          Remove
+        </UButton>
+      </div>
+    </div>
+  </UForm>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue'
 import { camelCase, sentenceCase, snakeCase } from 'change-case'
-import useForm, { type SchemaField } from '@tarcltd/form-vue'
+import useForm, { type SchemaField, type Schema } from '@tarcltd/form-vue'
 import { useFuse } from '@vueuse/integrations/useFuse'
 import { deepEqual } from 'fast-equals'
 import generateSchema from '../factories'
@@ -340,7 +388,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   mode: 'field',
 })
-const emit = defineEmits(['update:modelValue', 'update:field'])
+const emit = defineEmits(['update:modelValue', 'update:mode', 'update:field'])
 const viewMode = ref<'typeSelect' | 'edit'>('typeSelect')
 const appConfig = useAppConfig()
 const config = useRuntimeConfig().public.formUiNuxt
@@ -357,6 +405,14 @@ const internalValue = computed({
   set(value) {
     if (!deepEqual(value, props.modelValue)) {
       emit('update:modelValue', value)
+    }
+  },
+})
+const internalMode = computed({
+  get: () => props.mode,
+  set(value) {
+    if (!deepEqual(value, props.mode)) {
+      emit('update:mode', value)
     }
   },
 })
@@ -401,69 +457,89 @@ function onSubmit() {
     ...internalValue.value,
     type: 'object',
     properties: {
-      ...internalValue.value.properties,
+      ...Object.entries(internalValue.value.properties ?? {}).reduce<Record<string, SchemaField>>((acc, [key, value]) => {
+        if (key !== props.field?.[0]) {
+          acc[key] = value
+        }
+
+        return acc
+      }, {}),
     },
     required: [...(internalValue.value.required ?? []).filter(key => key !== internalField.value?.[0])],
   } satisfies ReturnType<typeof useForm>['input']
-  const newKey = `${form.state.group}:${snakeCase(form.state.label)}`
+  const newKey = snakeCase(form.state.label ?? '')
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  const newField: Record<string, any> = {
-    type: form.state.type ?? 'string',
-    attrs: {
-      'field:type': form.state['field:type'],
-    },
-  }
-
-  if (inputOptions.value.length) {
-    newField.enum = inputOptions.value
-  }
+  const newField: Record<string, any> = {}
 
   for (const [key, subvalue] of Object.entries(form.state)) {
+    if (typeof subvalue === 'string' && subvalue.length === 0) {
+      continue
+    }
+
     if (key === 'inputType' || key === 'required') {
       continue
     }
 
     const field = form.input.properties[key]
 
-    if (!field) {
-      continue
+    if (inputType.value === 'Trigger' || inputType.value === 'Link' || inputType.value === 'Action') {
+      if (key !== 'field:type') {
+        newField[camelCase(key)] = subvalue
+      }
     }
-
-    if (typeof subvalue === 'string' && subvalue.length === 0) {
-      continue
-    }
-
-    if (key === 'field:type') {
-      newField.attrs['field:type'] = subvalue
+    else if (key === 'field:type') {
+      newField.attrs = {
+        ...newField.attrs,
+        'field:type': subvalue,
+      }
     }
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    else if ((field as any)._path) {
+    else if ((field as any)?._path) {
       /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       useDeepObjSet(newField, (field as any)._path, subvalue)
     }
-    else {
+    else if (field) {
       newField[camelCase(key)] = subvalue
     }
   }
 
-  if (form.state.required && !newForm.required.includes(newKey)) {
-    newForm.required.push(newKey)
-  }
-
-  newField.attrs.elementInput = {
-    ...form.state.elementInput,
-    ...newField.attrs.elementInput,
-  }
-
-  newForm.properties[newKey] = newField
-
-  if (props.field) {
-    newForm.properties[newKey] = newField
-
-    if (newKey !== props.field[0]) {
-      /* eslint-disable-next-line @typescript-eslint/no-dynamic-delete */
-      delete newForm.properties[props.field[0]]
+  if (inputType.value === 'Trigger') {
+    newForm.metadata = {
+      ...newForm.metadata,
+      triggers: [...(newForm.metadata?.triggers ?? []), newField],
     }
+  }
+  else if (inputType.value === 'Link') {
+    newForm.metadata = {
+      ...newForm.metadata,
+      links: [...(newForm.metadata?.links ?? []), newField],
+    }
+  }
+  else if (inputType.value === 'Action') {
+    newForm.metadata = {
+      ...newForm.metadata,
+      actions: [...(newForm.metadata?.actions ?? []), newField],
+    }
+  }
+  else {
+    if (inputOptions.value.length) {
+      newField.enum = inputOptions.value
+    }
+
+    if (!newField.type) {
+      newField.type = 'string'
+    }
+
+    if (form.state.required && !newForm.required.includes(newKey)) {
+      newForm.required.push(newKey)
+    }
+
+    newField.attrs.elementInput = {
+      ...form.state.elementInput,
+      ...newField.attrs.elementInput,
+    }
+
+    newForm.properties[newKey] = newField
   }
 
   internalValue.value = newForm
@@ -473,6 +549,7 @@ function onSubmit() {
 
 function onCancel() {
   viewMode.value = 'typeSelect'
+  internalMode.value = 'field'
 
   inputType.value = null
   internalField.value = null
@@ -505,7 +582,28 @@ function onRemove() {
     }
   }
 
-  internalValue.value.properties = newProperties
+  if (Object.keys(newProperties).length === 0) {
+    internalValue.value = {} as Schema
+  }
+  else {
+    internalValue.value.properties = newProperties
+
+    internalValue.value.required = internalValue.value.required.filter(key => key !== internalField.value?.[0])
+
+    if (Array.isArray(internalValue.value.metadata?.triggers)) {
+      internalValue.value.metadata.triggers = internalValue.value.metadata?.triggers.filter(
+        trigger => trigger.source !== internalField.value?.[1]?.name,
+      )
+
+      if (internalValue.value.metadata?.triggers.length === 0) {
+        delete internalValue.value.metadata?.triggers
+      }
+    }
+
+    if (internalValue.value.metadata && Object.keys(internalValue.value.metadata).length === 0) {
+      delete internalValue.value.metadata
+    }
+  }
 
   onCancel()
 }
@@ -555,11 +653,6 @@ function createForm(type: string | null) {
     viewMode.value = 'typeSelect'
   }
 
-  if (type === 'Trigger') {
-    // TODO: Add trigger name increment
-    internalDefaults.value.label = 'Trigger 1'
-  }
-
   form = useForm(internalSchema.value, {
     defaults: internalDefaults.value,
   })
@@ -580,7 +673,7 @@ watch(inputType, createForm, { immediate: true })
 watch(
   internalField,
   (value) => {
-    if (props.mode === 'group') {
+    if (internalMode.value === 'group') {
       // TODO: Group edit mode
     }
     else {

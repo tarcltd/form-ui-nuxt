@@ -22,6 +22,8 @@ import trigger from './trigger'
 import radio from './radio'
 import quantity from './quantity'
 import select from './select'
+import link from './link'
+import action from './action'
 
 export const factoryDefaults = {
   type: 'object',
@@ -55,11 +57,11 @@ export function generateFactories(
     'Checkbox': checkbox,
     'File': file,
     'Image': image,
-    'Trigger': trigger(
-      Object.values(input?.properties ?? {}).map(field => field.name),
-    ),
     'URL': url,
     'UUID': uuid,
+    'Trigger': trigger(input),
+    'Link': link(input),
+    'Action': action(input),
   }
 }
 
@@ -82,17 +84,30 @@ export function generateSchema(
 
   const subschema = schemaFactory()
 
-  if (subschema[1]['field:type'] === 'trigger') {
+  if (subschema[1]['field:type'] === 'Trigger') {
     return [
       defu(subschema[0], {
         type: 'object',
         properties: {},
         required: [],
+        metadata: {
+          triggers: [],
+        },
       } satisfies Schema),
-      defu(subschema[1], {
-        order: -1,
-        group: 'trigger',
-      }),
+      subschema[1],
+    ]
+  }
+  else if (subschema[1]['field:type'] === 'Link') {
+    return [
+      defu(subschema[0], {
+        type: 'object',
+        properties: {},
+        required: [],
+        metadata: {
+          links: [],
+        },
+      } satisfies Schema),
+      subschema[1],
     ]
   }
 

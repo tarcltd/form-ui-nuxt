@@ -21,6 +21,7 @@
 <script lang="ts" setup>
 import type useForm from '@tarcltd/form-vue'
 import { computed, ref } from 'vue'
+import { deepEqual } from 'fast-equals'
 import useSortedFields from '../composables/useFieldSort'
 import TFormField from './TFormField.vue'
 
@@ -34,7 +35,9 @@ const formRef = ref()
 const internalValue = computed({
   get: () => props.modelValue,
   set(value) {
-    emit('update:modelValue', value)
+    if (!deepEqual(value, props.modelValue)) {
+      emit('update:modelValue', value)
+    }
   },
 })
 </script>

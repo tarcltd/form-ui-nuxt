@@ -37,6 +37,8 @@ export default defineNuxtModule<ModuleOptions>({
       'URL',
       'UUID',
       'Trigger',
+      'Link',
+      'Action',
     ],
   },
   async setup(options, nuxt) {
@@ -67,11 +69,6 @@ export default defineNuxtModule<ModuleOptions>({
       },
       {
         name: 'Schema',
-        type: true,
-        from: '@tarcltd/form-vue',
-      },
-      {
-        name: 'SchemaObject',
         type: true,
         from: '@tarcltd/form-vue',
       },

@@ -54,26 +54,35 @@
           </UButton>
         </div>
       </div>
-      <TForm
+      <div
         v-if="view === 'Preview'"
-        v-model="exampleForm.state"
-        :input="exampleForm.input"
-        :schema="exampleForm.schema"
-        class="space-y-4"
-        @submit="onSubmit"
+        class="grid gap-4"
       >
-        <UButton
-          v-if="
-            exampleForm?.input?.properties
-              && Object.keys(exampleForm.input.properties).length
-          "
-          type="submit"
-          class="w-fit ml-auto"
-          :disabled="exampleForm.isValid.value === false"
+        <TForm
+
+          v-model="exampleForm.state"
+          :input="exampleForm.input"
+          :schema="exampleForm.schema"
+          class="space-y-4"
+          @submit="onSubmit"
         >
-          Submit
-        </UButton>
-      </TForm>
+          <UButton
+            v-if="
+              Object.keys(exampleForm?.input?.properties ?? {}).length
+            "
+            type="submit"
+            class="w-fit ml-auto"
+            :disabled="exampleForm.isValid.value === false"
+          >
+            Submit
+          </UButton>
+        </TForm>
+        <span
+          v-if="
+            Object.keys(exampleForm?.input?.properties ?? {}).length
+          "
+        >Output: <pre>{{ JSON.stringify(exampleForm.state, null, 2) }}</pre></span>
+      </div>
       <TFormEditor
         v-else-if="view === 'Editor'"
         v-model="exampleForm.input"
@@ -84,9 +93,7 @@
       <pre
         v-else-if="view === 'JSON'"
         class="text-sm"
-      >
-        {{ JSON.stringify(builderSchema, null, 2) }}
-      </pre>
+      >{{ JSON.stringify(builderSchema, null, 2) }}</pre>
     </div>
     <div
       :class="{
@@ -102,7 +109,7 @@
       <TFormFieldEditor
         v-model="builderSchema"
         v-model:field="fieldInEdit"
-        :mode
+        v-model:mode="mode"
       />
     </div>
   </div>
@@ -121,8 +128,6 @@ function onGroupEdit(field: [string, SchemaField] | null) {
 }
 
 function onSubmit() {
-  console.log(exampleForm.state)
-
   exampleForm.reset()
 }
 

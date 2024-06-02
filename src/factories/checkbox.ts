@@ -1,5 +1,5 @@
 import type { Schema } from '@tarcltd/form-vue'
-import { help, defaultValue, multiple } from '../builder'
+import { help, defaultValue, multiple, visible } from '../builder'
 
 export default function (): [Partial<Schema>, Record<string, unknown>] {
   return [
@@ -14,6 +14,7 @@ export default function (): [Partial<Schema>, Record<string, unknown>] {
           },
         },
         multiple,
+        visible,
       },
     },
     {

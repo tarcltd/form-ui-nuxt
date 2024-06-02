@@ -12,7 +12,6 @@ export default createConfigForNuxt({
   dirs: {
     src: [
       './demo',
-      './src',
     ],
   },
 })

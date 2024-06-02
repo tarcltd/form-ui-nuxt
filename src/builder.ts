@@ -23,6 +23,7 @@ import defaultValue from './assets/default.json'
 import multiple from './assets/multiple.json'
 import accept from './assets/accept.json'
 import step from './assets/step.json'
+import visible from './assets/visible.json'
 
 export {
   help,
@@ -50,4 +51,5 @@ export {
   multiple,
   accept,
   step,
+  visible,
 }

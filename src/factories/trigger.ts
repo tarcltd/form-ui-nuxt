@@ -1,8 +1,11 @@
+import type useForm from '@tarcltd/form-vue'
 import type { Schema } from '@tarcltd/form-vue'
 
 export default function (
-  sources: string[],
+  input?: ReturnType<typeof useForm>['input'],
 ): () => [Partial<Schema>, Record<string, unknown>] {
+  const sources = Object.values(input?.properties ?? {}).map(field => field.name)
+
   return () => [
     {
       properties: {
@@ -51,8 +54,7 @@ export default function (
       required: ['source', 'condition', 'value'],
     },
     {
-      'field:type': 'trigger',
-      'type': 'trigger',
+      'field:type': 'Trigger',
       'source': sources[0] ?? '',
       'condition': 'Equals',
     },
